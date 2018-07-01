@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Web App for instagram competitions with django2">
+    <meta name="author" content="Charefdz19">
+
+    <title>InstaWinner</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/shop-homepage.css'%}" rel="stylesheet">
+    <link href={% static 'vendor/font-awesome/css/font-awesome.min.css' %} rel="stylesheet" type="text/css">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">InstaWinner</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-3">
+          <div class="list-group">
+            <a href="{% url 'Followers' %}" class="list-group-item">Followers</a>
+            <a href="{% url 'Likers'%}" class="list-group-item">Likers</a>
+          </div>
+        </div>
+        <!-- /.col-lg-9 -->
+        <div class="col-lg-9">
+          {% block content%}
+
+
+          {% endblock%}
+        </div>
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+      <!-- Footer -->
+
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+  </body>
+
+</html>

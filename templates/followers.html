@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{%block content%}
+<div class="card">
+            <div class="card-header">
+              <i class="fa fa-users"></i>Followers</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for follower in followers %}
+                    <li class="list-group-item">
+                            <div>
+                                <i class="fa fa-user">
+                                </i> <h5 style="display: inline-block"> {{ follower }}</h5>
+
+                                <span class="pull-right">
+                                    <a class="mr-3 d-inline-block pull-right" target="_blank" href="https://www.instagram.com/{{follower}}/" ><i class="fa fa-instagram"></i></a>
+                                </span>
+                            </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+</div>
+{%endblock%}
