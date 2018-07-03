@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
+
 {%block content%}
+<div class="card">
+            <div class="card-header">
+              <i class="fa fa-users"></i>Control</div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'GetFollowers'%}">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-block" name ="winner" >Get followers</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+</div>
 <div class="card">
             <div class="card-header">
               <i class="fa fa-users"></i>Followers</div>
