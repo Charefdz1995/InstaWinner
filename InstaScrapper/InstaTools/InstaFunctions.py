@@ -3,7 +3,7 @@ from selenium import webdriver
 from InstaWinner.settings import STATICFILES_DIRS
 import yaml
 from random import randint
-
+from math import ceil
 def login(driver,username,password):
     driver.get('https://www.instagram.com/accounts/login/')
     time.sleep(2)
@@ -57,25 +57,25 @@ def reset(path):
 
 def get_followers(driver):
 	driver.find_element_by_link_text('Profile').click()
-	time.sleep(2)
+	time.sleep(5)
 	driver.find_element_by_partial_link_text(" followers").click()
 	time.sleep(2)
 	xpath = ("//a[@style='width: 30px; height: 30px;']")
 	x = 0
 	y = 500
 	followers_num_element  = driver.find_elements_by_xpath('//span[@class ="g47SY "]')
-	followers_num = int(followers_num_element[1].get_attribute('title'))
+	followers_num = int(followers_num_element[1].get_attribute('title').replace(',',''))
 	print(followers_num)
-	count =  0 
-	while True :
+	scrolls = ceil(followers_num/12)
+	print('this is the number of scrolls'+str(scrolls))
+	for i in range(scrolls):
+		print(str(i)+"scroll")
 		driver.execute_script("document.querySelector('div[role=dialog] ul').parentNode.scrollTo({}, {})".format(str(x),str(y)))
-		count += 24 
-		x += 500
-		y+= 500
-		count = len(driver.find_elements_by_xpath(xpath))
-		if count  >= followers_num:
-			break
-
+		time.sleep(1)
+		x += 1000
+		y+= 1000
+	print('We get :')
+	print (len(driver.find_elements_by_xpath("//a[@style='width: 30px; height: 30px;']/following-sibling::div/div[1]/a")))
 
 	return driver,driver.find_elements_by_xpath("//a[@style='width: 30px; height: 30px;']/following-sibling::div/div[1]/a")
 
@@ -135,3 +135,7 @@ def select_winner(driver,post_url,followers):
 			winner = randint(0,winner)
 	driver.get('https://www.instagram.com/'+str(winner_username))
 	return driver
+def get_items(driver):
+
+	people=driver.find_elements_by_xpath("//a[@style='width: 30px; height: 30px;']/following-sibling::div/div[1]/a")		
+	return driver, people
