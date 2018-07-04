@@ -66,7 +66,7 @@ def get_followers(driver):
 	followers_num_element  = driver.find_elements_by_xpath('//span[@class ="g47SY "]')
 	followers_num = int(followers_num_element[1].get_attribute('title').replace(',',''))
 	print(followers_num)
-	scrolls = ceil(followers_num/12)
+	scrolls = ceil(followers_num/12)+1 # +1 just to make sure that we are going to scrap all content 
 	print('this is the number of scrolls'+str(scrolls))
 	for i in range(scrolls):
 		print(str(i)+"scroll")
@@ -81,25 +81,25 @@ def get_followers(driver):
 
 def get_likers(driver,post_url):
 	driver.get(post_url)
-	time.sleep(5)
+	time.sleep(2)
 	driver.find_element_by_partial_link_text(' likes').click()
-	time.sleep(5)
+	time.sleep(2)
 	element = driver.find_element_by_xpath('//a[@class = "zV_Nj"]/span')
 	xpath = ("//a[@style='width: 30px; height: 30px;']")
-	cmp  = len(driver.find_elements_by_xpath(xpath))
 	likes_num = int((element.text).replace(',',''))
 	print("likers number {}".format(likes_num))
+	scrolls = ceil(likes_num/12)+1 # +1 just to make sure that we are going to scrap all content 
+	print('this is the number of scrolls'+str(scrolls))
 	x,y = 0 , 500
-
-	while True :
+	for i in range(scrolls):
+		print(str(i)+"scroll")
 		driver.execute_script("document.querySelector('div[role=dialog] ul').parentNode.scrollTo({}, {})".format(str(x),str(y)))
 		time.sleep(1)
-		x += 500
-		y+= 500
-		cmp  = len(driver.find_elements_by_xpath(xpath))
-		print(cmp)
-		if cmp >= likes_num:
-			break
+		x += 1000
+		y+= 1000
+	print('We get :')
+	print (len(driver.find_elements_by_xpath("//a[@style='width: 30px; height: 30px;']/following-sibling::div/div[1]/a")))
+
 
 	return driver,driver.find_elements_by_xpath("//a[@style='width: 30px; height: 30px;']/following-sibling::div/div[1]/a")
 
@@ -116,15 +116,13 @@ def select_winner(driver,post_url,followers):
 	x,y = 0 , 500
 	winner = randint(0,likes_num-1)
 	print('this is the winner '+str(winner))
-	while True :
+	scrolls = ceil(winner/12)+1
+	for i in range(scrolls):
+		print(str(i)+"scroll")
 		driver.execute_script("document.querySelector('div[role=dialog] ul').parentNode.scrollTo({}, {})".format(str(x),str(y)))
 		time.sleep(1)
-		x += 500
-		y+= 500
-		cmp  = len(driver.find_elements_by_xpath(xpath))
-		print('compre the'+str(cmp)+' to the winner'+str(winner))
-		if cmp >= winner :
-			break
+		x += 1000
+		y+= 1000
 	while True : 
 		people=driver.find_elements_by_xpath("//a[@style='width: 30px; height: 30px;']/following-sibling::div/div[1]/a")		
 		winner_id = people[winner-1]
